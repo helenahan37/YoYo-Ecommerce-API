@@ -4,14 +4,16 @@
 	"description": "YoYo E-commerce API",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+		"start": "node server.js",
+		"start:prod": "nodemon server.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"express": "^4.18.2",
-		"mongoose": "^8.0.0"
+		"mongoose": "^8.0.0",
+		"validator": "^13.11.0"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1"
