@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const { globalErrorHandler } = require('../middlewares/globalErrorHandler');
+const { globalErrorHandler, notFound } = require('../middlewares/globalErrorHandler');
 
 const app = express();
 
@@ -10,10 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
 const userRoutes = require('../routes/userRoute');
+const productRoutes = require('../routes/productRoute');
 
 // routes
-app.use('/', userRoutes);
+app.use('/users/', userRoutes);
+app.use('/products/', productRoutes);
 
+app.use(notFound);
 // global error handler
 app.use(globalErrorHandler);
 

@@ -1,7 +1,10 @@
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 //import user model
-const { User } = require('../models/UserModel');
+const User = require('../models/UserModel');
+const generateJwt = require('../utils/generateJWT');
+const getToken = require('../utils/getToken');
+const verifyToken = require('../utils/verifyToken');
 
 // register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -36,7 +39,7 @@ const loginUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body;
 
 	if (!password) {
-		return res.status(400).json({
+		res.status(400).json({
 			status: 'fail',
 			message: 'Password is required for login',
 		});
@@ -45,16 +48,29 @@ const loginUser = asyncHandler(async (req, res) => {
 	//check if user exist
 	const userFound = await User.findOne({ email });
 	if (userFound && (await bcrypt.compare(password, userFound?.password))) {
-		return res.status(200).json({
+		res.status(200).json({
 			status: 'success',
 			message: 'User Logged in Successfully',
+			userFound,
+			token: await generateJwt(userFound?._id),
 		});
 	} else {
 		throw new Error('Invalid email or password');
 	}
 });
 
+// get user profile
+const getUserProfile = asyncHandler(async (req, res) => {
+	const token = getToken(req);
+	const verifyTokenResult = verifyToken(token);
+	return res.status(200).json({
+		status: 'success',
+		message: 'Welcome to User Profile',
+	});
+});
+
 module.exports = {
 	registerUser,
 	loginUser,
+	getUserProfile,
 };
