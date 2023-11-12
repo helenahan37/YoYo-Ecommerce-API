@@ -3,8 +3,6 @@ const { registerUser, loginUser, getUserProfile } = require('../controllers/user
 const checkLogin = require('../middlewares/checkLogin');
 const userRoutes = express.Router();
 
-userRoutes.post('/register', registerUser);
-userRoutes.post('/login', loginUser);
-userRoutes.get('/profile', checkLogin, getUserProfile);
+userRoutes.post('/register', registerUser).post('/login', loginUser).get('/profile', checkLogin, getUserProfile);
 
 module.exports = userRoutes;
