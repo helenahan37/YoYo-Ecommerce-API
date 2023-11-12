@@ -13,12 +13,14 @@ const userRoutes = require('../routes/userRoute');
 const productRoutes = require('../routes/productRoute');
 const categoryRoutes = require('../routes/categoryRoute');
 const brandRoutes = require('../routes/brandRoute');
+const colorRoutes = require('../routes/colorRoute');
 
 // routes
 app.use('/users/', userRoutes);
 app.use('/products/', productRoutes);
 app.use('/categories/', categoryRoutes);
 app.use('/brands/', brandRoutes);
+app.use('/colors/', colorRoutes);
 
 app.use(notFound);
 // global error handler
