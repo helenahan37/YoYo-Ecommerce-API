@@ -106,5 +106,49 @@ const getProducts = asyncHandler(async (req, res) => {
 });
 
 //get single product
+const getProduct = asyncHandler(async (req, res) => {
+	const product = await Product.findById(req.params.id);
+	if (!product) {
+		throw new Error('Product not found');
+	} else {
+		res.json({
+			status: 'success',
+			product,
+		});
+	}
+});
 
-module.exports = { createProduct, getProducts };
+// update product
+const updateProduct = asyncHandler(async (req, res) => {
+	// const { name, description, category, sizes, colors, user, price, totalQty, brand } = req.body;
+
+	const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	if (!product) {
+		throw new Error('Product not found');
+	}
+
+	res.json({
+		status: 'success',
+		message: 'Product updated successfully',
+		product,
+	});
+});
+
+// delete product
+
+const deleteProduct = asyncHandler(async (req, res) => {
+	const product = await Product.findByIdAndDelete(req.params.id);
+	if (!product) {
+		throw new Error('Product not found');
+	}
+	res.json({
+		status: 'success',
+		message: 'Product deleted successfully',
+	});
+});
+
+module.exports = { createProduct, getProducts, getProduct, updateProduct, deleteProduct };
