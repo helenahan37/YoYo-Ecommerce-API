@@ -10,7 +10,7 @@ const createCategory = asyncHandler(async (req, res) => {
 		throw new Error('Category already exist');
 	} else {
 		const category = await Category.create({
-			name,
+			name: name.toLowerCase(),
 			user: req.userId,
 		});
 		res.status(201).json({

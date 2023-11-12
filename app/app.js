@@ -12,11 +12,13 @@ app.use(express.static(`${__dirname}/public`));
 const userRoutes = require('../routes/userRoute');
 const productRoutes = require('../routes/productRoute');
 const categoryRoutes = require('../routes/categoryRoute');
+const brandRoutes = require('../routes/brandRoute');
 
 // routes
 app.use('/users/', userRoutes);
 app.use('/products/', productRoutes);
 app.use('/categories/', categoryRoutes);
+app.use('/brands/', brandRoutes);
 
 app.use(notFound);
 // global error handler
