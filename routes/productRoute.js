@@ -1,7 +1,7 @@
 const express = require('express');
 const {
 	createProduct,
-	getProducts,
+	getAllProducts,
 	getProduct,
 	updateProduct,
 	deleteProduct,
@@ -12,9 +12,9 @@ const productRoutes = express.Router();
 
 productRoutes
 	.post('/', checkLogin, createProduct)
-	.get('/', getProducts)
+	.get('/', getAllProducts)
 	.get('/:id', getProduct)
 	.put('/:id', checkLogin, updateProduct)
-	.delete('/:id/delete', checkLogin, deleteProduct);
+	.delete('/:id', checkLogin, deleteProduct);
 
 module.exports = productRoutes;

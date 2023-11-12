@@ -32,7 +32,7 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 //get all products
-const getProducts = asyncHandler(async (req, res) => {
+const getAllProducts = asyncHandler(async (req, res) => {
 	// query products
 	let productQuery = Product.find();
 
@@ -139,7 +139,6 @@ const updateProduct = asyncHandler(async (req, res) => {
 });
 
 // delete product
-
 const deleteProduct = asyncHandler(async (req, res) => {
 	const product = await Product.findByIdAndDelete(req.params.id);
 	if (!product) {
@@ -151,4 +150,4 @@ const deleteProduct = asyncHandler(async (req, res) => {
 	});
 });
 
-module.exports = { createProduct, getProducts, getProduct, updateProduct, deleteProduct };
+module.exports = { createProduct, getAllProducts, getProduct, updateProduct, deleteProduct };
