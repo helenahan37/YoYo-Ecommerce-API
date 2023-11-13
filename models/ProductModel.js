@@ -68,6 +68,8 @@ const ProductSchema = new Schema(
 	},
 	{
 		timestamps: true,
+
+		// include virtual properties in the JSON representation
 		toJSON: { virtuals: true },
 	}
 );
