@@ -74,6 +74,29 @@ const ProductSchema = new Schema(
 	}
 );
 
+// Virtual property to get the average rating of a product
+// Total rating
+ProductSchema.virtual('totalReviews').get(function () {
+	//this refers to sigle product
+	const product = this;
+	return product?.reviews?.length;
+});
+
+// average rating
+ProductSchema.virtual('averageRating').get(function () {
+	let ratingsTotal = 0;
+
+	const product = this;
+
+	product?.reviews?.forEach((review) => {
+		ratingsTotal += review?.rating;
+	});
+
+	//average rating with 1 decimal place
+	const averageRating = Number(ratingsTotal / product?.reviews?.length).toFixed(1);
+	return averageRating;
+});
+
 const Product = mongoose.model('Product', ProductSchema);
 
 module.exports = Product;
