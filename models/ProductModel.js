@@ -77,9 +77,15 @@ const ProductSchema = new Schema(
 // Virtual property to get the average rating of a product
 // Total rating
 ProductSchema.virtual('totalReviews').get(function () {
-	//this refers to sigle product
+	//this refers to single product
 	const product = this;
 	return product?.reviews?.length;
+});
+
+//total quantity left
+ProductSchema.virtual('totalQtyLeft').get(function () {
+	const product = this;
+	return product?.totalQty - product?.totalSold;
 });
 
 // average rating

@@ -13,7 +13,7 @@ const createProduct = asyncHandler(async (req, res) => {
 		throw new Error('Product already exist');
 	}
 	//check if brand exist
-	const brandFound = await Brand.findOne({ name: brand.toLowerCase() });
+	const brandFound = await Brand.findOne({ name: brand?.toLowerCase() });
 	if (!brandFound) {
 		throw new Error('Brand not found, please check the name or add brand first');
 	}

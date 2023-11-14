@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const randomNumbers = require('../utils/generateRandomNumbers');
+const randomNumbers = require('../utils/generateRandomNumber');
 
 const OrderSchema = new Schema(
 	{
