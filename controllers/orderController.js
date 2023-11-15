@@ -21,6 +21,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
 	// get user id from request
 	const user = await User.findById(req.userId);
+
 	//check if order is empty
 	if (orderItems?.length <= 0) {
 		throw new Error('Order is empty');
@@ -32,6 +33,12 @@ const createOrder = asyncHandler(async (req, res) => {
 		shippingAddress,
 		totalPrice,
 	});
+
+	// check if user has shipping address
+	// if it false, then throw error
+	if (!user?.shippingAddress) {
+		throw new Error('Please provide your shipping address');
+	}
 
 	//add order into user and save
 	user.orders.push(order?._id);

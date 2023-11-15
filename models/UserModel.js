@@ -58,7 +58,7 @@ const UserSchema = new Schema(
 			postCode: {
 				type: String,
 			},
-			province: {
+			state: {
 				type: String,
 			},
 			country: {

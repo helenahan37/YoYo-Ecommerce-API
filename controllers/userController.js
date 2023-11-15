@@ -69,8 +69,39 @@ const getUserProfile = asyncHandler(async (req, res) => {
 	});
 });
 
+const updateShippingAddress = asyncHandler(async (req, res) => {
+	const { firstName, lastName, address, city, postalCode, state, phone, country } = req.body;
+	const user = await User.findByIdAndUpdate(
+		req.userAuthId,
+		{
+			shippingAddress: {
+				firstName,
+				lastName,
+				address,
+				city,
+				postalCode,
+				state,
+				phone,
+				country,
+			},
+			hasShippingAddress: true,
+		},
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+	//send response
+	res.json({
+		status: 'success',
+		message: 'User shipping address updated successfully',
+		user,
+	});
+});
+
 module.exports = {
 	registerUser,
 	loginUser,
 	getUserProfile,
+	updateShippingAddress,
 };
