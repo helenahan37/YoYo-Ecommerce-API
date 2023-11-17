@@ -6,7 +6,6 @@ const createCoupon = asyncHandler(async (req, res) => {
 	// check if admin
 
 	// check if coupon already exist
-
 	const couponExists = await Coupon.findOne({ code });
 	if (couponExists) {
 		throw new Error('Coupon already exist');

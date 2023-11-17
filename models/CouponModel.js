@@ -1,5 +1,6 @@
 //coupon model
 const mongoose = require('mongoose');
+const couponRoutes = require('../routes/couponRoute');
 const Schema = mongoose.Schema;
 
 const CouponSchema = new Schema(
@@ -32,6 +33,41 @@ const CouponSchema = new Schema(
 		toJSON: { virtuals: true },
 	}
 );
+
+//coupon if coupon is expired or not
+CouponSchema.virtual('isExpired').get(function () {
+	return this.endDate < Date.now();
+});
+
+//date validation middleware
+CouponSchema.pre('validate', function (next) {
+	if (this.endDate < this.startDate) {
+		next(new Error('End date must be greater than start date'));
+	}
+	next();
+});
+
+CouponSchema.pre('validate', function (next) {
+	if (this.startDate < Date.now()) {
+		next(new Error('Start date must be greater than current date'));
+	}
+	next();
+});
+
+CouponSchema.pre('validate', function (next) {
+	if (this.endDate < Date.now()) {
+		next(new Error('End date must be greater than current date'));
+	}
+	next();
+});
+
+// discount validation middleware
+CouponSchema.pre('validate', function (next) {
+	if (this.discount <= 0 || this.discount > 100) {
+		next(new Error('Discount must be between 0 and 100'));
+	}
+	next();
+});
 
 const Coupon = mongoose.model('Coupon', CouponSchema);
 module.exports = Coupon;
