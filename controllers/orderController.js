@@ -2,7 +2,10 @@ const Order = require('../models/OrderModel');
 const User = require('../models/UserModel');
 const Product = require('../models/ProductModel');
 const asyncHandler = require('express-async-handler');
+const Stripe = require('stripe');
 
+// create stripe instance
+const stripe = new Stripe(process.env.STRIPE_KEY);
 /*  
 1. get the user who created the order
 2. get the order details
@@ -61,12 +64,39 @@ const createOrder = asyncHandler(async (req, res) => {
 		await product.save();
 	});
 
-	res.json({
-		status: 'success',
-		message: 'Order created successfully',
-		order,
-		user,
+	// make payment
+
+	// convert order to stripe structure
+	const convertOrders = orderItems.map((order) => {
+		return {
+			price_data: {
+				currency: 'usd',
+				product_data: {
+					name: order?.name,
+					description: order?.description,
+				},
+				unit_amount: order?.price * 100,
+			},
+			quantity: order?.quantity,
+		};
 	});
+	//create session
+	const session = await stripe.checkout.sessions.create({
+		line_items: convertOrders,
+		// one time payment
+		mode: 'payment',
+		success_url: 'http://localhost:3000/success',
+		cancel_url: 'http://localhost:3000/cancel',
+	});
+
+	res.send({ url: session.url });
+
+	// res.json({
+	// 	status: 'success',
+	// 	message: 'Order created successfully',
+	// 	order,
+	// 	user,
+	// });
 });
 
 module.exports = { createOrder };
