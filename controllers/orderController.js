@@ -3,8 +3,6 @@ const User = require('../models/UserModel');
 const Product = require('../models/ProductModel');
 const asyncHandler = require('express-async-handler');
 const Stripe = require('stripe');
-
-// create stripe instance
 const stripe = new Stripe(process.env.STRIPE_KEY);
 /*  
 1. get the user who created the order
@@ -83,6 +81,9 @@ const createOrder = asyncHandler(async (req, res) => {
 	//create session
 	const session = await stripe.checkout.sessions.create({
 		line_items: convertOrders,
+		metadata: {
+			orderId: JSON.stringify(order?._id),
+		},
 		// one time payment
 		mode: 'payment',
 		success_url: 'http://localhost:3000/success',
@@ -90,13 +91,6 @@ const createOrder = asyncHandler(async (req, res) => {
 	});
 
 	res.send({ url: session.url });
-
-	// res.json({
-	// 	status: 'success',
-	// 	message: 'Order created successfully',
-	// 	order,
-	// 	user,
-	// });
 });
 
 module.exports = { createOrder };
