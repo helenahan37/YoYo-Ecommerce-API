@@ -61,18 +61,20 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // get user profile
 const getUserProfile = asyncHandler(async (req, res) => {
-	const token = getToken(req);
-	const verifyTokenResult = verifyToken(token);
-	return res.status(200).json({
+	//fine user and add orders to user
+	const user = await User.findById(req.userId).populate('orders');
+
+	res.status(200).json({
 		status: 'success',
-		message: 'Welcome to User Profile',
+		message: 'Welcome to your profile',
+		user,
 	});
 });
 
 const updateShippingAddress = asyncHandler(async (req, res) => {
 	const { firstName, lastName, address, city, postalCode, state, phone, country } = req.body;
 	const user = await User.findByIdAndUpdate(
-		req.userAuthId,
+		req.userId,
 		{
 			shippingAddress: {
 				firstName,

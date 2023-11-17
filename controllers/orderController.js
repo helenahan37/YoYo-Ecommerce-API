@@ -37,7 +37,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
 	// check if user has shipping address
 	// if it false, then throw error
-	if (!user?.shippingAddress) {
+	if (!user?.hasShippingAddress) {
 		throw new Error('Please provide your shipping address');
 	}
 
@@ -93,4 +93,46 @@ const createOrder = asyncHandler(async (req, res) => {
 	res.send({ url: session.url });
 });
 
-module.exports = { createOrder };
+// get all orders
+const getAllOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({});
+	res.status(200).json({
+		status: 'success',
+		message: 'All orders',
+		orders,
+	});
+});
+
+//get order by id
+const getOrder = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+	res.status(200).json({
+		status: 'success',
+		message: 'Order found',
+		order,
+	});
+});
+
+//update order to delivery
+const updateOrder = asyncHandler(async (req, res) => {
+	// fine the order by id
+	const order = await Order.findById(req.params.id);
+	// update order
+	const updatedOrder = await Order.findByIdAndUpdate(
+		order,
+		{
+			status: req.body.status,
+		},
+		{
+			new: true,
+			runValidators: true,
+		}
+	);
+	res.status(200).json({
+		status: 'success',
+		message: 'Order updated',
+		updatedOrder,
+	});
+});
+
+module.exports = { createOrder, getAllOrders, getOrder, updateOrder };

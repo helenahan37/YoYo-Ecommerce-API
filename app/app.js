@@ -75,7 +75,7 @@ const brandRoutes = require('../routes/brandRoute');
 const colorRoutes = require('../routes/colorRoute');
 const reviewRoutes = require('../routes/reviewRoute');
 const orderRoutes = require('../routes/orderRoute');
-const Order = require('../models/OrderModel');
+const couponRoutes = require('../routes/couponRoute');
 
 // routes
 app.use('/users/', userRoutes);
@@ -85,6 +85,7 @@ app.use('/brands/', brandRoutes);
 app.use('/colors/', colorRoutes);
 app.use('/reviews/', reviewRoutes);
 app.use('/orders/', orderRoutes);
+app.use('/coupons/', couponRoutes);
 
 app.use(notFound);
 // global error handler
