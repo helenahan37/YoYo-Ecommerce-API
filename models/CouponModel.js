@@ -1,6 +1,5 @@
 //coupon model
 const mongoose = require('mongoose');
-const couponRoutes = require('../routes/couponRoute');
 const Schema = mongoose.Schema;
 
 const CouponSchema = new Schema(
@@ -37,6 +36,12 @@ const CouponSchema = new Schema(
 //coupon if coupon is expired or not
 CouponSchema.virtual('isExpired').get(function () {
 	return this.endDate < Date.now();
+});
+
+// check how many days left for coupon to expire
+CouponSchema.virtual('daysLeft').get(function () {
+	const daysLeft = Math.ceil((this.endDate - Date.now()) / (1000 * 60 * 60 * 24)) + ' days left';
+	return daysLeft;
 });
 
 //date validation middleware
