@@ -150,4 +150,57 @@ const updateOrder = asyncHandler(async (req, res) => {
 	});
 });
 
-module.exports = { createOrder, getAllOrders, getOrder, updateOrder };
+//pipeline
+//get all sales orders' pirce
+const salesOrdersPrice = asyncHandler(async (req, res) => {
+	// get sales
+	// create aggregation pipeline
+	const totalSales = await Order.aggregate([
+		{
+			$group: {
+				_id: null,
+				totalSales: {
+					$sum: '$totalPrice',
+				},
+			},
+		},
+	]);
+
+	res.status(200).json({
+		status: 'success',
+		message: 'All sales orders price',
+		totalSales,
+	});
+});
+
+//get orders status
+const orderStatus = asyncHandler(async (req, res) => {
+	// get order status
+	// create aggregation pipeline
+	const getorderStatus = await Order.aggregate([
+		{
+			$group: {
+				_id: null,
+				totalSale: {
+					$sum: '$totalPrice',
+				},
+				minimulSale: {
+					$min: '$totalPrice',
+				},
+				maxmumSale: {
+					$max: '$totalPrice',
+				},
+				averSale: {
+					$avg: '$totalPrice',
+				},
+			},
+		},
+	]);
+	res.status(200).json({
+		status: 'success',
+		message: 'All sales orders price',
+		getorderStatus,
+	});
+});
+
+module.exports = { createOrder, getAllOrders, getOrder, updateOrder, salesOrdersPrice, orderStatus };

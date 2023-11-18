@@ -81,4 +81,5 @@ const deleteCoupon = asyncHandler(async (req, res) => {
 		message: 'Coupon deleted successfully',
 	});
 });
+
 module.exports = { createCoupon, getAllCoupons, getCouponById, updateCoupon, deleteCoupon };
