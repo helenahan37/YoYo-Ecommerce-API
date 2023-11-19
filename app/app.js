@@ -92,7 +92,7 @@ app.use(notFound);
 app.use(globalErrorHandler);
 
 app.get('/', (req, res) => {
-	res.send('Welcome to our online store!');
+	res.send('Welcome to Yoyo online store!');
 });
 
 module.exports = app;
