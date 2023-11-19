@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler');
 //import user model
 const User = require('../models/UserModel');
 const generateJwt = require('../utils/generateJWT');
-const getToken = require('../utils/getToken');
-const verifyToken = require('../utils/verifyToken');
 
 // register a new user
 const registerUser = asyncHandler(async (req, res) => {
