@@ -7,15 +7,16 @@ const {
 	deleteProduct,
 } = require('../controllers/productController');
 const checkLogin = require('../middlewares/checkLogin');
+const isAdmin = require('../middlewares/isAdmin');
 const upload = require('../config/fileUpload');
 
 const productRoutes = express.Router();
 
 productRoutes
-	.post('/', checkLogin, upload.array('files'), createProduct)
+	.post('/', checkLogin, isAdmin, upload.array('files'), createProduct)
 	.get('/', getAllProducts)
 	.get('/:id', getProduct)
-	.put('/:id', checkLogin, updateProduct)
-	.delete('/:id', checkLogin, deleteProduct);
+	.put('/:id', checkLogin, isAdmin, updateProduct)
+	.delete('/:id', checkLogin, isAdmin, deleteProduct);
 
 module.exports = productRoutes;
