@@ -77,6 +77,9 @@ const reviewRoutes = require('../routes/reviewRoute');
 const orderRoutes = require('../routes/orderRoute');
 const couponRoutes = require('../routes/couponRoute');
 
+app.get('/', (req, res) => {
+	res.send('Welcome to Yoyo online store!');
+});
 // routes
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
@@ -90,9 +93,5 @@ app.use('/coupons', couponRoutes);
 app.use(notFound);
 // global error handler
 app.use(globalErrorHandler);
-
-app.get('/', (req, res) => {
-	res.send('Welcome to Yoyo online store!');
-});
 
 module.exports = app;
