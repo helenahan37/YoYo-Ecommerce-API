@@ -77,8 +77,8 @@ const reviewRoutes = require('../routes/reviewRoute');
 const orderRoutes = require('../routes/orderRoute');
 const couponRoutes = require('../routes/couponRoute');
 
-app.get('/', (req, res) => {
-	res.send('Welcome to Yoyo online store!');
+app.get('/home', (req, res) => {
+	res.send('Welcome to Yoyo online store 👋 ');
 });
 // routes
 app.use('/users', userRoutes);
