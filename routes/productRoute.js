@@ -12,7 +12,7 @@ const upload = require('../config/fileUpload');
 const productRoutes = express.Router();
 
 productRoutes
-	.post('/', checkLogin, upload.single('file'), createProduct)
+	.post('/', checkLogin, upload.array('files'), createProduct)
 	.get('/', getAllProducts)
 	.get('/:id', getProduct)
 	.put('/:id', checkLogin, updateProduct)

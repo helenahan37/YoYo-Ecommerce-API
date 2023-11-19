@@ -39,7 +39,6 @@ const ProductSchema = new Schema(
 		images: [
 			{
 				type: String,
-				default: 'http://picsum.photos/200/300',
 				required: true,
 			},
 		],

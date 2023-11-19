@@ -5,6 +5,8 @@ const Brand = require('../models/BrandModel');
 
 // create a new product
 const createProduct = asyncHandler(async (req, res) => {
+	const convertedImgs = req.files.map((file) => file.path);
+
 	const { name, description, brand, price, category, sizes, colors, totalQty } = req.body;
 
 	//check if product exist
@@ -34,6 +36,7 @@ const createProduct = asyncHandler(async (req, res) => {
 		colors,
 		user: req.userId,
 		totalQty,
+		images: convertedImgs,
 	});
 
 	// add product to category

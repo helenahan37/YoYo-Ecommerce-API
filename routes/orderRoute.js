@@ -6,7 +6,7 @@ const {
 	getOrder,
 	updateOrder,
 	salesOrdersPrice,
-	orderStatus,
+	orderStats,
 } = require('../controllers/orderController');
 
 const orderRoutes = express.Router();
@@ -15,7 +15,7 @@ orderRoutes
 	.post('/', checkLogin, createOrder)
 	.get('/', checkLogin, getAllOrders)
 	.get('/sales/sum', checkLogin, salesOrdersPrice)
-	.get('/sales/status', checkLogin, orderStatus)
+	.get('/sales/status', checkLogin, orderStats)
 	.get('/:id', checkLogin, getOrder)
 	.put('/update/:id', checkLogin, updateOrder);
 // .delete('/:id', checkLogin, deleteOrder);

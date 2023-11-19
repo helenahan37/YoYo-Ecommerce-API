@@ -173,9 +173,9 @@ const salesOrdersPrice = asyncHandler(async (req, res) => {
 	});
 });
 
-//get orders status
-const orderStatus = asyncHandler(async (req, res) => {
-	// get order status
+//get orders stats
+const orderStats = asyncHandler(async (req, res) => {
+	// get order stats
 	// create aggregation pipeline
 	const getorderStatus = await Order.aggregate([
 		{
@@ -196,11 +196,34 @@ const orderStatus = asyncHandler(async (req, res) => {
 			},
 		},
 	]);
+	// get today's date
+	const date = new Date();
+	const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+	//get today's sales
+	const salesToday = await Order.aggregate([
+		{
+			$match: {
+				createdAt: {
+					$gte: today,
+				},
+			},
+		},
+		{
+			$group: {
+				_id: null,
+				totalSales: {
+					$sum: '$totalPrice',
+				},
+			},
+		},
+	]);
+
 	res.status(200).json({
 		status: 'success',
 		message: 'All sales orders price',
 		getorderStatus,
+		salesToday,
 	});
 });
 
-module.exports = { createOrder, getAllOrders, getOrder, updateOrder, salesOrdersPrice, orderStatus };
+module.exports = { createOrder, getAllOrders, getOrder, updateOrder, salesOrdersPrice, orderStats };
