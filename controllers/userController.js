@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 //import user model
 const User = require('../models/UserModel');
-const generateJwt = require('../utils/generateJWT');
+const generateJwt = require('../utils/generateJwt');
 
 // register a new user
 const registerUser = asyncHandler(async (req, res) => {
