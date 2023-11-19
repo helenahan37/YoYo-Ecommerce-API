@@ -91,4 +91,8 @@ app.use(notFound);
 // global error handler
 app.use(globalErrorHandler);
 
+app.get('/', (req, res) => {
+	res.send('Welcome to our online store!');
+});
+
 module.exports = app;
