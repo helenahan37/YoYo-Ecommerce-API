@@ -1,4 +1,4 @@
-# YoYo-Ecommerce-API
+# yoyo-ecommerce-API
 
 An e-shop API with Payment integration using Stripe
 
